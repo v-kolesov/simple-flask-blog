@@ -7,4 +7,5 @@ COPY requirements.txt /tmp
 RUN pip install -r /tmp/requirements.txt
 VOLUME [ "/app", "/data" ]
 EXPOSE 5000
-CMD ["python", "run.py"]
+#CMD ["python", "run.py"]
+ENTRYPOINT [ "./run" ]
