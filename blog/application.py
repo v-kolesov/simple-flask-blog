@@ -2,7 +2,7 @@ import os
 from flask import Flask
 from flask.helpers import get_env
 
-from models import db
+from models import db, Page
 from views import bp, mail
 
 CASE_BOOLEAN = {
@@ -45,6 +45,14 @@ def create(fncs=[
     if not os.path.exists(get_db_local_path()):
         with app.app_context():
             db.create_all()
+            db.session.add(Page(
+                slug='/',
+                is_published=True,
+                title=os.environ.get('BLOG_HOME_TITLE'),
+                intro=os.environ.get('BLOG_HOME_INTRO'),
+                text='None'
+            ))
+            db.session.commit()
 
     """ Register blueprint(s) here """
     app.register_blueprint(bp)
