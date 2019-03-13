@@ -167,12 +167,10 @@ def contact():
         host = request.headers.get('Host', '<no host>')
         msg = Message(f'Incoming message from [{host}]',
                       sender=form.email.data,
-                      recipients=[current_app.config['BLOG_EMAIL']],
+                      recipients=[current_app.config['BLOG_CONTACT_EMAIL']],
                       body=form.message.data
                       )
-        print(msg)
         mail.send(msg)
-
         success_send = True
 
     cntx = {
