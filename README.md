@@ -1,2 +1,2 @@
 # simple-flask-blog
-This blog was build with Flask framework.
+This blog was built with Flask framework.
