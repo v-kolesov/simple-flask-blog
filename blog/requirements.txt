@@ -1,0 +1,6 @@
+Flask-SQLAlchemy
+wtforms_alchemy
+pytest-flask
+Flask-WTF
+Flask-Mail
+gunicorn

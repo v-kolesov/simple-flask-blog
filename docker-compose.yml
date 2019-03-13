@@ -1,0 +1,31 @@
+version: '3.7'
+services:
+  traefik:
+    image: traefik
+    command: --docker
+    ports:
+      - "80:80"
+      - "8080:8080"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+  nginx:
+    restart: always
+    image: "nginx:stable"
+    labels:
+      - "traefik.frontend.rule=Host:${MAIN_HOST};PathPrefix:/static"
+    volumes:
+      - "./nginx:/etc/nginx/conf.d"
+      - "./blog/static:/var/www/${MAIN_HOST}/static"
+  blog:
+    restart: always
+    container_name: app
+    build:
+      context: ./blog
+    tty: true
+    volumes:
+      - "./blog:/app"
+      - "./.data/blog_db:/data"
+    env_file:
+      - .env
+    labels:
+      - "traefik.frontend.rule=Host:${MAIN_HOST}"

@@ -1,0 +1,44 @@
+{%set title="List of pages" %}
+
+{% extends 'admin/base.html' %}
+{% block  home_title %}{% endblock %}
+{% block latest %}{% endblock %}
+{% block container %}
+<div class="col-md-12 blog-main">
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item active" aria-current="page"><a href="/">Home</a></li>
+      <li class="breadcrumb-item active" aria-current="page"><a class="btn btn-primary btn-sm"  role="button" href="{{url_for('blog.admin_pages', id='new')}}"> New Page</a></li>
+    </ol>
+  </nav>
+<table class="table table-striped table-sm">
+  <thead  class="thead-dark">
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Created At</th>
+      <th scope="col">Title</th>
+      <th scope="col">Published</th>
+      <th scope="col">Live</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for page in pages %}
+    {%set live_link = url_for('blog.page', slug=page.slug) if page.slug != '/' else '/' %}
+    <tr>
+      <th scope="row">{{page.id}}</th>
+      <td>{{page.created_at}}</td>
+      <td>
+      <a href="{{url_for('blog.admin_pages', id=page.id)}}">{{page.title}}</a>
+      </td>
+      <td><i class="far {{'fa-check-square' if page.is_published else 'fa-minus-square'}}""></i></td>
+      <td>
+      {% if page.is_published %}
+      <a href="{{live_link}}"><i class="fas fa-link"></i></a>
+      {% endif %}
+      </td>
+    </tr>
+    {%endfor%}
+  </tbody>
+</table>
+</div>
+{% endblock %}
