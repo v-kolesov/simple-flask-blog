@@ -149,12 +149,14 @@ def home(num=0):
 
 @bp.route('/<path:slug>.html')
 def page(slug='/'):
-    cntx = dict(
-        page=Page.published().filter(Page.slug == slug).first()
+    page = (
+        Page.published().filter(Page.slug == slug).first()
+        or abort(404)
     )
+    cntx = dict(page=page)
     if page:
         return render_template('front/page.html', **cntx)
-    abort(404)
+
 
 
 @bp.route('/contact', methods=['POST', 'GET'])
