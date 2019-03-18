@@ -32,9 +32,9 @@
       </td>
       <td><i class="far {{'fa-check-square' if page.is_published else 'fa-minus-square'}}""></i></td>
       <td>
-      {% if page.is_published %}
-      <a href="{{live_link}}"><i class="fas fa-link"></i></a>
-      {% endif %}
+
+      <a href="{{ url_for('blog.page', slug=page.slug, preview='yes')}}"><i class="fas fa-link"></i></a>
+
       </td>
     </tr>
     {%endfor%}
