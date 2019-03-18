@@ -82,25 +82,6 @@ def admin_pages_list(id=None):
     return render_template('admin/page_list.html', **cntx)
 
 
-@bp.route('/create')
-@login_required
-def create():
-    if current_app.config['BLOG_ALLOW_RECREATE_DATABASE']:
-        db.drop_all()
-        db.create_all()
-        homepage = Page(
-            is_published=True,
-            slug='/',
-            title=current_app.config['BLOG_HOME_TITLE'],
-            intro=current_app.config['BLOG_HOME_INTRO'],
-            text='None'
-        )
-        db.session.add(homepage)
-        db.session.commit()
-        return 'created'
-    abort('404')
-
-
 @bp.route('/admin/login', methods=['POST', 'GET'])
 def login():
     next_url = request.args.get('next', url_for('blog.admin_pages_list'))
@@ -149,14 +130,14 @@ def home(num=0):
 
 @bp.route('/<path:slug>.html')
 def page(slug='/'):
-    page = (
-        Page.published().filter(Page.slug == slug).first()
-        or abort(404)
-    )
+    preview = request.args.get('preview') is not None
+    page = Page.query.filter(Page.slug == slug).first()
+    if page is None or (not page.is_published and not preview):
+        abort(404)
+
     cntx = dict(page=page)
     if page:
         return render_template('front/page.html', **cntx)
-
 
 
 @bp.route('/contact', methods=['POST', 'GET'])
