@@ -5,9 +5,12 @@ services:
     command: --docker
     ports:
       - "80:80"
-      - "8080:8080"
+      - "443:443"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
+      - /etc/letsencrypt/live/vkolesov.com/fullchain.pem:/cert.crt
+      - /etc/letsencrypt/live/vkolesov.com/privkey.pem:/key.key
+      - ./.data/traefik/traefik.toml:/traefik.toml
   nginx:
     restart: always
     image: "nginx:stable"

@@ -1,21 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- Global site tag (gtag.js) - Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id={{ config.GOOGLE_ANALITICS_GTAG }}"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', '{{config.GOOGLE_ANALITICS_GTAG}}');
-</script>
 
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="description" content="">
   <meta name="author" content="">
+
   <title>{{title}}</title>
+
   <!-- Bootstrap core CSS -->
   <link href="/static/front/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
@@ -51,7 +44,7 @@
           {% endif %}
 
           <li class="nav-item">
-            <a class="nav-link" href="/about.html">About</a>
+            <a class="nav-link" href="/about.html?preview=yes">About Me</a>
           </li>
 
           <li class="nav-item">
