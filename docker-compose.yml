@@ -3,7 +3,7 @@ services:
   traefik:
     restart: always
     image: traefik
-    command: --docker
+    command: --docker --accessLog.filePath="/access.log"
     ports:
       - "80:80"
       - "443:443"
@@ -12,6 +12,7 @@ services:
       - /etc/letsencrypt/live/vkolesov.com/fullchain.pem:/cert.crt
       - /etc/letsencrypt/live/vkolesov.com/privkey.pem:/key.key
       - ./.data/traefik/traefik.toml:/traefik.toml
+      - ./access.log:/access.log
   nginx:
     restart: always
     image: "nginx:stable"
